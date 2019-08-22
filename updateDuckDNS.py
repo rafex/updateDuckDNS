@@ -19,7 +19,6 @@ Created on Aug 19, 2019
 @author: rafex
 
 '''
-import time
 import os
 import logging
 import requests
