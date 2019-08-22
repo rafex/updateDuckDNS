@@ -2,7 +2,7 @@
 
 PATH_INSTALL_SCRIPT_PYTHON="/opt/updateDuckDNS"
 
-export UPDATE_DUCK_DNS_LOGS="/var/log/updateGoogleDNS"
+export UPDATE_DUCK_DNS_LOGS="/var/log/updateDuckDNS"
 export UPDATE_DUCK_DNS_TOKEN=
 export UPDATE_DUCK_DNS_DOMAIN=
 
