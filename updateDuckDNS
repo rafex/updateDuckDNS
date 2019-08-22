@@ -4,7 +4,7 @@ PATH_INSTALL_SCRIPT_PYTHON="/opt/updateDuckDNS"
 
 export UPDATE_DUCK_DNS_LOGS="/var/log/updateDuckDNS"
 export UPDATE_DUCK_DNS_TOKEN=
-export UPDATE_DUCK_DNS_DOMAIN=
+export UPDATE_DUCK_DNS_SUB_DOMAIN=
 
 ### Check for dir, if not found create it using the mkdir ##
 { # try

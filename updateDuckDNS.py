@@ -28,7 +28,7 @@ from bs4 import BeautifulSoup
 from sys import exit
 
 
-URL_DUCK_DNS = 'https://www.duckdns.org/update?domains=${domains}&token=${token}&ip=${ip}'
+URL_DUCK_DNS = 'https://www.duckdns.org/update?domains=${sub_domains}.duckdns.org&token=${token}&ip=${ip}'
 PAGE_MY_IP ='https://www.cual-es-mi-ip.net/'
 try:
     PATH_LOGS=os.environ["UPDATE_DUCK_DNS_LOGS"]
@@ -52,8 +52,8 @@ logging.info('Started')
 
 try:
     TOKEN = os.environ["UPDATE_DUCK_DNS_TOKEN"]
-    DOMAINS = os.environ["UPDATE_DUCK_DNS_DOMAIN"]
-    URL_DUCK_DNS = URL_DUCK_DNS.replace('${domains}', DOMAINS)
+    SUB_DOMAINS = os.environ["UPDATE_DUCK_DNS_SUB_DOMAIN"]
+    URL_DUCK_DNS = URL_DUCK_DNS.replace('${sub_domains}', SUB_DOMAINS)
     URL_DUCK_DNS = URL_DUCK_DNS.replace('${token}', TOKEN)
 except KeyError:
     logging.info('there are no environment variables')
@@ -71,6 +71,8 @@ my_ip = tag[0].get_text()
 logging.info("My IP: " + my_ip)
 
 URL_DUCK_DNS = URL_DUCK_DNS.replace('${ip}', my_ip)
+
+requests.get(URL_DUCK_DNS, timeout=5)
 
 logging.info("DUCK_URL: " + URL_DUCK_DNS)
 #page_response = requests.get(URL_DUCK_DNS, timeout=5)
