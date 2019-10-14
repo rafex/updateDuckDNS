@@ -22,8 +22,8 @@ Created on Aug 19, 2019
 import os
 import logging
 import requests
+import re
 
-from bs4 import BeautifulSoup
 from sys import exit
 
 
@@ -57,24 +57,51 @@ try:
 except KeyError:
     logging.info('there are no environment variables')
     exit()
-    
 
-
-
-page_response = requests.get(PAGE_MY_IP, timeout=5)
-page = requests.get("https://www.cual-es-mi-ip.net/").text
-page_content = BeautifulSoup(page_response.content, "html.parser")
-tag = page_content.find_all('span', attrs={'class':'big-text font-arial'})
-my_ip = tag[0].get_text()
+page_link ='https://domains.google.com/checkip'
+page_response = requests.get(page_link, timeout=5)
+my_ip = page_response.text
 
 logging.info("My IP: " + my_ip)
 
-URL_DUCK_DNS = URL_DUCK_DNS.replace('${ip}', my_ip)
+try:
+    PATH_INSTALL=os.environ["PATH_INSTALL_SCRIPT_PYTHON_DUCK_DNS"]
+except Exception:
+    logging.warn('not found enviroment PATH_INSTALL_SCRIPT_PYTHON')
+    
+replace_ip = True
+try:
+    if(os.path.isfile(PATH_INSTALL+"/my_ip.txt") == True):
+        file = open(PATH_INSTALL+"/my_ip.txt", "r+")
+        ip_file = file.read()
+        logging.info('my_ip.txt: ' + ip_file.strip())
+        if(ip_file.strip() != my_ip.strip()):
+            ip_file = re.sub(ip_file.strip(), my_ip.strip(), ip_file)
+            file.seek(0)
+            file.write(ip_file)
+            file.close()
+            logging.info('update ip')
+        else:
+            replace_ip = False
+            logging.info('not update ip')
+    else:
+        logging.info('create file my_ip.txt')
+        file = open(PATH_INSTALL+"/my_ip.txt","w") 
+        file.write(my_ip) 
+        file.close()  
+    
+except Exception as ex:
+    logging.warning(ex)
+    logging.warning('not found file my_ip.txt')
+    exit()
 
-requests.get(URL_DUCK_DNS, timeout=5)
-
-logging.info("DUCK_URL: " + URL_DUCK_DNS)
-#page_response = requests.get(URL_DUCK_DNS, timeout=5)
+if (replace_ip):
+    URL_DUCK_DNS = URL_DUCK_DNS.replace('${ip}', my_ip)
+    logging.info("DUCK_URL: " + URL_DUCK_DNS)
+    
+    page_response = requests.get(URL_DUCK_DNS, timeout=5)
+    
+    logging.info("Response: " + page_response.text)
 
 
 logging.info('Finished')
