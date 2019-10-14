@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH_INSTALL_SCRIPT_PYTHON="/opt/updateDuckDNS"
+export PATH_INSTALL_SCRIPT_PYTHON_DUCK_DNS="/opt/updateDuckDNS"
 
 export UPDATE_DUCK_DNS_LOGS="/var/log/updateDuckDNS"
 export UPDATE_DUCK_DNS_TOKEN=
@@ -11,4 +11,4 @@ export UPDATE_DUCK_DNS_SUB_DOMAIN=
     [ ! -d "$UPDATE_DUCK_DNS_LOGS" ] && mkdir -p "${UPDATE_DUCK_DNS_LOGS}"
 } 
 
-/usr/bin/python3 ${PATH_INSTALL_SCRIPT_PYTHON}/updateDuckDNS.py
+/usr/bin/python3 ${PATH_INSTALL_SCRIPT_PYTHON_DUCK_DNS}/updateDuckDNS.py
