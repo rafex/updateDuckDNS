@@ -57,9 +57,6 @@ try:
 except KeyError:
     logging.info('there are no environment variables')
     exit()
-    
-
-
 
 page_link ='https://domains.google.com/checkip'
 page_response = requests.get(page_link, timeout=5)
@@ -104,7 +101,7 @@ if (replace_ip):
     
     page_response = requests.get(URL_DUCK_DNS, timeout=5)
     
-    logging.info("Response: " + page_response)
+    logging.info("Response: " + page_response.text)
 
 
 logging.info('Finished')
