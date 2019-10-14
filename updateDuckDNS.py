@@ -55,7 +55,7 @@ try:
     URL_DUCK_DNS = URL_DUCK_DNS.replace('${sub_domains}', SUB_DOMAINS)
     URL_DUCK_DNS = URL_DUCK_DNS.replace('${token}', TOKEN)
 except KeyError:
-    logging.info('there are no environment variables')
+    logging.warning('there are no environment variables')
     exit()
 
 page_link ='https://domains.google.com/checkip'
@@ -67,7 +67,7 @@ logging.info("My IP: " + my_ip)
 try:
     PATH_INSTALL=os.environ["PATH_INSTALL_SCRIPT_PYTHON_DUCK_DNS"]
 except Exception:
-    logging.warn('not found enviroment PATH_INSTALL_SCRIPT_PYTHON')
+    logging.warning('not found enviroment PATH_INSTALL_SCRIPT_PYTHON')
     
 replace_ip = True
 try:
